@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 
+/**
+ * User Model
+ */
 const userSchema = new mongoose.Schema({
 
     name: {
@@ -11,6 +14,10 @@ const userSchema = new mongoose.Schema({
         type: String, 
         requierd: [true, 'Email is requiered'],
         unique: true,
+    },
+    emailVerified: {
+        type: Boolean, 
+        default : false
     },
     password: {
         type: String,
