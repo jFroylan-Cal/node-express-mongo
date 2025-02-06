@@ -1,19 +1,35 @@
 import { Request, Response } from "express";
+import { RegisterUserDto } from "../../domain/dtos/auth/register-user.dto";
+import { AuthService } from "../services/auth.service";
 
 
 
 export class AuthController { 
-    constructor() { }
+    constructor(
+        public readonly authService: AuthService,
+    ) { }
 
-    register(request: Request, response: Response) {
-        response.json({ message: 'Register' });
+    /**
+     * Register user Controller
+     * @param registerUserDto 
+     */
+    
+    register = (request: Request, response: Response) =>{
+        const [error, registerDto] = RegisterUserDto.create(request.body);
+
+        if (error) return response.status(400).json({ error });
+        
+        this.authService.registerUser(registerDto!)
+            .then((user) => {
+                response.json({ user });
+            })
     }
 
-    loginUser(request: Request, response: Response) {
+    loginUser = (request: Request, response: Response) => {
         response.json({ message: 'login' });
     }
 
-    validateEmail(request: Request, response: Response) {
+    validateEmail = (request: Request, response: Response) => {
         response.json({ message: 'Validate Email' });
     }
 }
