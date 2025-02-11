@@ -1,3 +1,4 @@
+import { BcryptAdapter } from "../../config/bcrypt.adapter";
 import { UserModel } from "../../data/mongo/models/user.model";
 import { RegisterUserDto } from "../../domain/dtos/auth/register-user.dto";
 import { UserEntity } from "../../domain/entities/user.entity";
@@ -22,11 +23,10 @@ export class AuthService {
         try {
 
             const user = new UserModel(registerUserDto);    
+
+            user.password = BcryptAdapter.hashPassword(registerUserDto.password);
+
             await user.save();
-
-            //TODO encrypt password
-
-            
 
             //TODO JWT Token
 
