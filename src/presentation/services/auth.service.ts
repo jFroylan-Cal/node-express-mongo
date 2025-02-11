@@ -1,4 +1,5 @@
 import { BcryptAdapter } from "../../config/bcrypt.adapter";
+import { JwtAdapter } from "../../config/jwt.adapter";
 import { UserModel } from "../../data/mongo/models/user.model";
 import { LoginUserDto } from "../../domain/dtos/auth/login-user.dto";
 import { RegisterUserDto } from "../../domain/dtos/auth/register-user.dto";
@@ -27,9 +28,9 @@ export class AuthService {
 
             user.password = BcryptAdapter.hashPassword(registerUserDto.password);
 
-            await user.save();
 
-            //TODO JWT Token
+
+            await user.save();
 
             //TODO send email confirmation
 
@@ -47,7 +48,12 @@ export class AuthService {
 
     }
 
-
+    /**
+     * Login User Service
+     * @param {LoginUserDto}
+     * @returns {Promise<UserEntity>}
+     * @throws {CustomError}
+     */ 
     public async loginUser(loginUserDto: LoginUserDto) {
         
         const user = await UserModel.findOne({ email: loginUserDto.email });
@@ -60,9 +66,15 @@ export class AuthService {
 
         const { password, ...userEntity } = UserEntity.fromObject(user);
 
+        const token = await JwtAdapter.generateToken({
+            id: user.id
+        });
+
+        if (!token) throw CustomError.internalServerError('Error white create JWT');
+
         return {
             ...userEntity,
-            token: "token"
+            token: token,
         };
     }
 
