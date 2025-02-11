@@ -1,5 +1,6 @@
 import { BcryptAdapter } from "../../config/bcrypt.adapter";
 import { UserModel } from "../../data/mongo/models/user.model";
+import { LoginUserDto } from "../../domain/dtos/auth/login-user.dto";
 import { RegisterUserDto } from "../../domain/dtos/auth/register-user.dto";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { CustomError } from "../../domain/errors/custom.error";
@@ -46,6 +47,24 @@ export class AuthService {
 
     }
 
+
+    public async loginUser(loginUserDto: LoginUserDto) {
+        
+        const user = await UserModel.findOne({ email: loginUserDto.email });
+        
+        if (!user) throw CustomError.badRequest("Verify your credentials");
+
+        const isMatch = BcryptAdapter.comparePassword(loginUserDto.password, user.password);
+
+        if (!isMatch) throw CustomError.badRequest("Verify your credentials");
+
+        const { password, ...userEntity } = UserEntity.fromObject(user);
+
+        return {
+            ...userEntity,
+            token: "token"
+        };
+    }
 
 }
 
