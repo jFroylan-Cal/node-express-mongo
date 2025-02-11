@@ -27,7 +27,11 @@ export class AuthController {
     /**
      * Register user Controller
      * @param registerUserDto 
+     * @returns {void}
+     * @throws {CustomError}
+     * @throws {Error}
      */
+
     register = (request: Request, response: Response) =>{
         const [error, registerDto] = RegisterUserDto.create(request.body);
 
@@ -41,6 +45,15 @@ export class AuthController {
             });
     }
 
+
+    /**
+     * Login User Controller
+     * @param {Request} request
+     * @param {Response} response
+     * @returns {void}
+     * @throws {CustomError}
+     * @throws {Error}
+     */
     loginUser = (request: Request, response: Response) => {
         const [error, loginUserDto] = LoginUserDto.create(request.body);
         

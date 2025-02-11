@@ -6,6 +6,13 @@ export class LoginUserDto {
         public password: string,
     ) { }
 
+
+    /**
+     * Create Login User DTO
+     * @param {object} object
+     * @returns {[string?, LoginUserDto?]}
+     *  
+     */
     static create(object: { [key: string]: any }): [string?, LoginUserDto?] {
         const { email, password } = object;
         

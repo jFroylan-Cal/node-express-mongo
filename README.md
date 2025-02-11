@@ -27,6 +27,51 @@ Run the project
 npm run dev
 ```
 
+Project structure
+```
+.
+├── README.md
+├── package-lock.json
+├── package.json
+├── src
+│   ├── app.ts
+│   ├── config
+│   │   ├── bcrypt.adapter.ts
+│   │   ├── jwt.adapter.ts
+│   │   ├── regular-exp.ts
+│   │   └── env.ts
+│   ├── data
+│   │   └── mongo
+│   │       └── models
+│   │           └── user.model.ts
+│   ├── domain
+│   │   ├── dtos
+│   │   │   ├── auth
+│   │   │   │   ├── login-user.dto.ts
+│   │   │   │   └── register-user.dto.ts
+│   │   │   └── user.dto.ts
+│   │   ├── entities                    
+│   │   │   └── user.entity.ts
+│   │   ├── errors
+│   │   │   └── custom.error.ts
+│   │   └── usecases
+│   │       └── auth.usecase.ts
+│   ├── presentation
+│   │   ├── auth
+│   │   │   ├── controller.ts
+│   │   │   └── service.ts
+│   │   ├── services
+│   │   │   └── auth.service.ts
+│   │   └── usecases
+│   │       └── auth.usecase.ts
+│   └── index.ts
+├── .env.Template
+├── .gitignore
+├── package-lock.json
+├── package.json
+└── tsconfig.json
+
+```
 ## Deployment
 
 This project is not ready to be deployed
