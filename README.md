@@ -67,12 +67,10 @@ Project structure
 │   └── index.ts
 ├── .env.Template
 ├── .gitignore
-├── LICENSE
-├── nodemon.json
 ├── package-lock.json
 ├── package.json
-├── tsconfig.json
-└── yarn.lock
+└── tsconfig.json
+
 ```
 ## Deployment
 
